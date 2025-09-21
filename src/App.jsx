@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Weather from "./components/Weather";
 import Features from "./pages/Features";
-import Contact from "./pages/contact";
+import Contact from "./pages/Contact";
 import Explore from "./pages/Explore";
 import SoilPredictor from "./pages/SoilPredictor";
 import CropRecommendation from "./pages/CropRecommendation"; // ✅ Added
