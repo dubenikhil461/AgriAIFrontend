@@ -1,0 +1,23 @@
+.weather {
+  text-align: center;
+  margin: 20px;
+}
+
+#searchBar input {
+  padding: 5px;
+  width: 150px;
+}
+
+#searchBar button {
+  padding: 5px 10px;
+  margin-left: 5px;
+}
+
+.hide {
+  margin-top: 20px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
