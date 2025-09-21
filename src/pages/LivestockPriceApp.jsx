@@ -2,470 +2,94 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Ax from "../utils/Axios";
 
-const LivestockPriceApp = () => {
+const CommodityPriceApp = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedMarket, setSelectedMarket] = useState("");
   const [selectedCommodity, setSelectedCommodity] = useState("");
 
+  const states = ["Kerala", "Maharashtra", "Uttar_Pradesh", "NCT_of_Delhi"];
   const [commodities] = useState([
-    "Absinthe",
-    "Ajwan",
-    "Alasande Gram",
-    "Almond(Badam)",
-    "Alsandikai",
-    "Amaranthus",
-    "Ambada Seed",
-    "Ambady/Mesta",
-    "Amla(Nelli Kai)",
-    "Amphophalus",
-    "Amranthas Red",
-    "Antawala",
-    "Anthorium",
-    "Apple",
-    "Apricot(Jardalu/Khumani)",
-    "Arecanut(Betelnut/Supari)",
-    "Arhar (Tur/Red Gram)(Whole)",
-    "Arhar Dal(Tur Dal)",
-    "Asalia",
-    "Asgand",
-    "Ashgourd",
-    "Ashoka",
-    "Ashwagandha",
-    "Asparagus",
-    "Astera",
-    "Atis",
-    "Avare Dal",
-    "Bael",
-    "Bajji chilli",
-    "Bajra(Pearl Millet/Cumbu)",
-    "Balekai",
-    "balsam",
-    "Bamboo",
-    "Banana",
-    "Banana - Green",
-    "Banana flower",
-    "Banana Leaf",
-    "Banana stem",
-    "Barley (Jau)",
-    "basil",
-    "Bay leaf (Tejpatta)",
-    "Beans",
-    "Beaten Rice",
-    "Beetroot",
-    "Behada",
-    "Bengal Gram Dal (Chana Dal)",
-    "Bengal Gram(Gram)(Whole)",
-    "Ber(Zizyphus/Borehannu)",
-    "Betal Leaves",
-    "Betelnuts",
-    "Bhindi(Ladies Finger)",
-    "Bhui Amlaya",
-    "Big Gram",
-    "Binoula",
-    "Bitter gourd",
-    "Black Gram (Urd Beans)(Whole)",
-    "Black Gram Dal (Urd Dal)",
-    "Black pepper",
-    "BOP",
-    "Borehannu",
-    "Bottle gourd",
-    "Brahmi",
-    "Bran",
-    "Bread Fruit",
-    "Brinjal",
-    "Brocoli",
-    "Broken Rice",
-    "Broomstick(Flower Broom)",
-    "Bull",
-    "Bullar",
-    "Bunch Beans",
-    "Butter",
-    "buttery",
-    "Cabbage",
-    "Calendula",
-    "Calf",
-    "Camel Hair",
-    "Cane",
-    "Capsicum",
-    "Cardamoms",
-    "Carnation",
-    "Carrot",
-    "Cashew Kernnel",
-    "Cashewnuts",
-    "Castor Oil",
-    "Castor Seed",
-    "Cauliflower",
-    "Chakotha",
-    "Chandrashoor",
-    "Chapparad Avare",
-    "Chennangi (Whole)",
-    "Chennangi Dal",
-    "Cherry",
-    "Chikoos(Sapota)",
-    "Chili Red",
-    "Chilly Capsicum",
-    "Chironji",
-    "Chow Chow",
-    "Chrysanthemum",
-    "Chrysanthemum(Loose)",
-    "Cinamon(Dalchini)",
-    "cineraria",
-    "Clarkia",
-    "Cloves",
-    "Cluster beans",
-    "Coca",
-    "Cock",
-    "Cocoa",
-    "Coconut",
-    "Coconut Oil",
-    "Coconut Seed",
-    "Coffee",
-    "Colacasia",
-    "Copra",
-    "Coriander(Leaves)",
-    "Corriander seed",
-    "Cossandra",
-    "Cotton",
-    "Cotton Seed",
-    "Cow",
-    "Cowpea (Lobia/Karamani)",
-    "Cowpea(Veg)",
-    "Cucumbar(Kheera)",
-    "Cummin Seed(Jeera)",
-    "Curry Leaf",
-    "Custard Apple (Sharifa)",
-    "Daila(Chandni)",
-    "Dal (Avare)",
-    "Dalda",
-    "Delha",
-    "Dhaincha",
-    "dhawai flowers",
-    "dianthus",
-    "Double Beans",
-    "Dragon fruit",
-    "dried mango",
-    "Drumstick",
-    "Dry Chillies",
-    "Dry Fodder",
-    "Dry Grapes",
-    "Duck",
-    "Duster Beans",
-    "Egg",
-    "Egypian Clover(Barseem)",
-    "Elephant Yam (Suran)",
-    "Field Pea",
-    "Fig(Anjura/Anjeer)",
-    "Firewood",
-    "Fish",
-    "Flax seeds",
-    "Flower Broom",
-    "Foxtail Millet(Navane)",
-    "French Beans (Frasbean)",
-    "Galgal(Lemon)",
-    "Gamphrena",
-    "Garlic",
-    "Ghee",
-    "Giloy",
-    "Gingelly Oil",
-    "Ginger(Dry)",
-    "Ginger(Green)",
-    "Gladiolus Bulb",
-    "Gladiolus Cut Flower",
-    "Glardia",
-    "Goat",
-    "Goat Hair",
-    "golden rod",
-    "Gond",
-    "Goose berry (Nellikkai)",
-    "Gram Raw(Chholia)",
-    "Gramflour",
-    "Grapes",
-    "Green Avare (W)",
-    "Green Chilli",
-    "Green Fodder",
-    "Green Gram (Moong)(Whole)",
-    "Green Gram Dal (Moong Dal)",
-    "Green Peas",
-    "Ground Nut Oil",
-    "Ground Nut Seed",
-    "Groundnut",
-    "Groundnut (Split)",
-    "Groundnut pods (raw)",
-    "Guar",
-    "Guar Seed(Cluster Beans Seed)",
-    "Guava",
-    "Gudmar",
-    "Guggal",
-    "gulli",
-    "Gur(Jaggery)",
-    "Gurellu",
-    "gypsophila",
-    "Haralekai",
-    "Harrah",
-    "He Buffalo",
-    "Heliconia species",
-    "Hen",
-    "Hippe Seed",
-    "Honey",
-    "Honge seed",
-    "Hybrid Cumbu",
-    "hydrangea",
-    "Indian Beans (Seam)",
-    "Indian Colza(Sarson)",
-    "Irish",
-    "Isabgul (Psyllium)",
-    "Jack Fruit",
-    "Jaee",
-    "Jaffri",
-    "Jaggery",
-    "Jamamkhan",
-    "Jamun(Narale Hannu)",
-    "Jarbara",
-    "Jasmine",
-    "Javi",
-    "Jowar(Sorghum)",
-    "Jute",
-    "Jute Seed",
-    "Kabuli Chana(Chickpeas-White)",
-    "Kacholam",
-    "Kakada",
-    "kakatan",
-    "Kalihari",
-    "Kalmegh",
-    "Kankambra",
-    "Karamani",
-    "karanja seeds",
-    "Karbuja(Musk Melon)",
-    "Kartali (Kantola)",
-    "Kevda",
-    "Kharif Mash",
-    "Khirni",
-    "Khoya",
-    "Kinnow",
-    "Knool Khol",
-    "Kodo Millet(Varagu)",
-    "kokum",
-    "Kooth",
-    "Kuchur",
-    "Kulthi(Horse Gram)",
-    "Kutki",
-    "kutki",
-    "Ladies Finger",
-    "Laha",
-    "Lak(Teora)",
-    "Leafy Vegetable",
-    "Lemon",
-    "Lentil (Masur)(Whole)",
-    "Lilly",
-    "Lime",
-    "Limonia (status)",
-    "Linseed",
-    "Lint",
-    "liquor turmeric",
-    "Litchi",
-    "Little gourd (Kundru)",
-    "Long Melon(Kakri)",
-    "Lotus",
-    "Lotus Sticks",
-    "Lukad",
-    "Lupine",
-    "Ma.Inji",
-    "Mace",
-    "macoy",
-    "Mahedi",
-    "Mahua",
-    "Mahua Seed(Hippe seed)",
-    "Maida Atta",
-    "Maize",
-    "Mango",
-    "Mango (Raw-Ripe)",
-    "mango powder",
-    "Maragensu",
-    "Marasebu",
-    "Marget",
-    "Marigold(Calcutta)",
-    "Marigold(loose)",
-    "Marikozhunthu",
-    "Mash",
-    "Mashrooms",
-    "Masur Dal",
-    "Mataki",
-    "Methi Seeds",
-    "Methi(Leaves)",
-    "Millets",
-    "Mint(Pudina)",
-    "Moath Dal",
-    "Mousambi(Sweet Lime)",
-    "Muesli",
-    "Muleti",
-    "Muskmelon Seeds",
-    "Mustard",
-    "Mustard Oil",
-    "Myrobolan(Harad)",
-    "Nargasi",
-    "Nearle Hannu",
-    "Neem Seed",
-    "Nelli Kai",
-    "Nerium",
-    "nigella seeds",
-    "Niger Seed (Ramtil)",
-    "Nutmeg",
-    "Onion",
-    "Onion Green",
-    "Orange",
-    "Orchid",
-    "Other green and fresh vegetables",
-    "Other Pulses",
-    "Ox",
-    "Paddy(Dhan)(Basmati)",
-    "Paddy(Dhan)(Common)",
-    "Palash flowers",
-    "Papaya",
-    "Papaya (Raw)",
-    "Patti Calcutta",
-    "Peach",
-    "Pear(Marasebu)",
-    "Peas cod",
-    "Peas Wet",
-    "Peas(Dry)",
-    "Pegeon Pea (Arhar Fali)",
-    "Pepper garbled",
-    "Pepper ungarbled",
-    "Perandai",
-    "Persimon(Japani Fal)",
-    "Pigs",
-    "Pineapple",
-    "pippali",
-    "Plum",
-    "Pointed gourd (Parval)",
-    "Polherb",
-    "Pomegranate",
-    "Poppy capsules",
-    "poppy seeds",
-    "Potato",
-    "Pumpkin",
-    "Pundi",
-    "Pundi Seed",
-    "Pupadia",
-    "Raddish",
-    "Ragi (Finger Millet)",
-    "Raibel",
-    "Rajgir",
-    "Rala",
-    "Ram",
-    "Ramphal",
-    "Rat Tail Radish (Mogari)",
-    "Ratanjot",
-    "Raya",
-    "Rayee",
-    "Red Cabbage",
-    "Red Gram",
-    "Resinwood",
-    "Riccbcan",
-    "Rice",
-    "Ridgeguard(Tori)",
-    "Rose(Local)",
-    "Rose(Loose))",
-    "Rose(Tata)",
-    "Round gourd",
-    "Rubber",
-    "Sabu Dan",
-    "Safflower",
-    "Saffron",
-    "Sajje",
-    "salvia",
-    "Same/Savi",
-    "sanay",
-    "Sandalwood",
-    "Sarasum",
-    "Season Leaves",
-    "Seegu",
-    "Seemebadnekai",
-    "Seetapal",
-    "Sesamum(Sesame,Gingelly,Til)",
-    "sevanti",
-    "She Buffalo",
-    "She Goat",
-    "Sheep",
-    "Siddota",
-    "Siru Kizhagu",
-    "Skin And Hide",
-    "Snakeguard",
-    "Soanf",
-    "Soapnut(Antawala/Retha)",
-    "Soha",
-    "Soji",
-    "Sompu",
-    "Soyabean",
-    "spikenard",
-    "Spinach",
-    "Sponge gourd",
-    "Squash(Chappal Kadoo)",
-    "stevia",
-    "stone pulverizer",
-    "Sugar",
-    "Sugarcane",
-    "Sundaikai",
-    "Sunflower",
-    "Sunflower Seed",
-    "Sunhemp",
-    "Suram",
-    "Surat Beans (Papadi)",
-    "Suva (Dill Seed)",
-    "Suvarna Gadde",
-    "Sweet Potato",
-    "Sweet Pumpkin",
-    "Sweet Sultan",
-    "sweet william",
-    "T.V. Cumbu",
-    "Tamarind Fruit",
-    "Tamarind Seed",
-    "Tapioca",
-    "Taramira",
-    "Tea",
-    "Tender Coconut",
-    "Thinai (Italian Millet)",
-    "Thogrikai",
-    "Thondekai",
-    "Tinda",
-    "Tobacco",
-    "Tomato",
-    "Torchwood",
-    "Toria",
-    "Tube Flower",
-    "Tube Rose(Double)",
-    "Tube Rose(Loose)",
-    "Tube Rose(Single)",
-    "Tulasi",
-    "tulip",
-    "Turmeric",
-    "Turmeric (raw)",
-    "Turnip",
-    "vadang",
-    "Vatsanabha",
-    "Walnut",
-    "Water Apple",
-    "Water chestnut",
-    "Water Melon",
-    "Wax",
-    "Wheat",
-    "Wheat Atta",
-    "White Muesli",
-    "White Peas",
-    "White Pumpkin",
-    "Wild lemon",
-    "Wood",
-    "Wood Apple",
-    "Wool",
-    "Yam",
-    "Yam (Ratalu)",
+    "Absinthe", "Ajwan", "Alasande Gram", "Almond(Badam)", "Alsandikai", "Amaranthus", 
+    "Ambada Seed", "Ambady/Mesta", "Amla(Nelli Kai)", "Amphophalus", "Amranthas Red", 
+    "Antawala", "Anthorium", "Apple", "Apricot(Jardalu/Khumani)", "Arecanut(Betelnut/Supari)", 
+    "Arhar (Tur/Red Gram)(Whole)", "Arhar Dal(Tur Dal)", "Asalia", "Asgand", "Ashgourd", 
+    "Ashoka", "Ashwagandha", "Asparagus", "Astera", "Atis", "Avare Dal", "Bael", "Bajji chilli", 
+    "Bajra(Pearl Millet/Cumbu)", "Balekai", "balsam", "Bamboo", "Banana", "Banana - Green", 
+    "Banana flower", "Banana Leaf", "Banana stem", "Barley (Jau)", "basil", "Bay leaf (Tejpatta)", 
+    "Beans", "Beaten Rice", "Beetroot", "Behada", "Bengal Gram Dal (Chana Dal)", 
+    "Bengal Gram(Gram)(Whole)", "Ber(Zizyphus/Borehannu)", "Betal Leaves", "Betelnuts", 
+    "Bhindi(Ladies Finger)", "Bhui Amlaya", "Big Gram", "Binoula", "Bitter gourd", 
+    "Black Gram (Urd Beans)(Whole)", "Black Gram Dal (Urd Dal)", "Black pepper", "BOP", 
+    "Borehannu", "Bottle gourd", "Brahmi", "Bran", "Bread Fruit", "Brinjal", "Brocoli", 
+    "Broken Rice", "Broomstick(Flower Broom)", "Bull", "Bullar", "Bunch Beans", "Butter", 
+    "buttery", "Cabbage", "Calendula", "Calf", "Camel Hair", "Cane", "Capsicum", "Cardamoms", 
+    "Carnation", "Carrot", "Cashew Kernnel", "Cashewnuts", "Castor Oil", "Castor Seed", 
+    "Cauliflower", "Chakotha", "Chandrashoor", "Chapparad Avare", "Chennangi (Whole)", 
+    "Chennangi Dal", "Cherry", "Chikoos(Sapota)", "Chili Red", "Chilly Capsicum", "Chironji", 
+    "Chow Chow", "Chrysanthemum", "Chrysanthemum(Loose)", "Cinamon(Dalchini)", "cineraria", 
+    "Clarkia", "Cloves", "Cluster beans", "Coca", "Cock", "Cocoa", "Coconut", "Coconut Oil", 
+    "Coconut Seed", "Coffee", "Colacasia", "Copra", "Coriander(Leaves)", "Corriander seed", 
+    "Cossandra", "Cotton", "Cotton Seed", "Cow", "Cowpea (Lobia/Karamani)", "Cowpea(Veg)", 
+    "Cucumbar(Kheera)", "Cummin Seed(Jeera)", "Curry Leaf", "Custard Apple (Sharifa)", 
+    "Daila(Chandni)", "Dal (Avare)", "Dalda", "Delha", "Dhaincha", "dhawai flowers", 
+    "dianthus", "Double Beans", "Dragon fruit", "dried mango", "Drumstick", "Dry Chillies", 
+    "Dry Fodder", "Dry Grapes", "Duck", "Duster Beans", "Egg", "Egypian Clover(Barseem)", 
+    "Elephant Yam (Suran)", "Field Pea", "Fig(Anjura/Anjeer)", "Firewood", "Fish", 
+    "Flax seeds", "Flower Broom", "Foxtail Millet(Navane)", "French Beans (Frasbean)", 
+    "Galgal(Lemon)", "Gamphrena", "Garlic", "Ghee", "Giloy", "Gingelly Oil", "Ginger(Dry)", 
+    "Ginger(Green)", "Gladiolus Bulb", "Gladiolus Cut Flower", "Glardia", "Goat", "Goat Hair", 
+    "golden rod", "Gond", "Goose berry (Nellikkai)", "Gram Raw(Chholia)", "Gramflour", 
+    "Grapes", "Green Avare (W)", "Green Chilli", "Green Fodder", "Green Gram (Moong)(Whole)", 
+    "Green Gram Dal (Moong Dal)", "Green Peas", "Ground Nut Oil", "Ground Nut Seed", 
+    "Groundnut", "Groundnut (Split)", "Groundnut pods (raw)", "Guar", "Guar Seed(Cluster Beans Seed)", 
+    "Guava", "Gudmar", "Guggal", "gulli", "Gur(Jaggery)", "Gurellu", "gypsophila", "Haralekai", 
+    "Harrah", "He Buffalo", "Heliconia species", "Hen", "Hippe Seed", "Honey", "Honge seed", 
+    "Hybrid Cumbu", "hydrangea", "Indian Beans (Seam)", "Indian Colza(Sarson)", "Irish", 
+    "Isabgul (Psyllium)", "Jack Fruit", "Jaee", "Jaffri", "Jaggery", "Jamamkhan", 
+    "Jamun(Narale Hannu)", "Jarbara", "Jasmine", "Javi", "Jowar(Sorghum)", "Jute", "Jute Seed", 
+    "Kabuli Chana(Chickpeas-White)", "Kacholam", "Kakada", "kakatan", "Kalihari", "Kalmegh", 
+    "Kankambra", "Karamani", "karanja seeds", "Karbuja(Musk Melon)", "Kartali (Kantola)", 
+    "Kevda", "Kharif Mash", "Khirni", "Khoya", "Kinnow", "Knool Khol", "Kodo Millet(Varagu)", 
+    "kokum", "Kooth", "Kuchur", "Kulthi(Horse Gram)", "Kutki", "kutki", "Ladies Finger", 
+    "Laha", "Lak(Teora)", "Leafy Vegetable", "Lemon", "Lentil (Masur)(Whole)", "Lilly", 
+    "Lime", "Limonia (status)", "Linseed", "Lint", "liquor turmeric", "Litchi", 
+    "Little gourd (Kundru)", "Long Melon(Kakri)", "Lotus", "Lotus Sticks", "Lukad", "Lupine", 
+    "Ma.Inji", "Mace", "macoy", "Mahedi", "Mahua", "Mahua Seed(Hippe seed)", "Maida Atta", 
+    "Maize", "Mango", "Mango (Raw-Ripe)", "mango powder", "Maragensu", "Marasebu", "Marget", 
+    "Marigold(Calcutta)", "Marigold(loose)", "Marikozhunthu", "Mash", "Mashrooms", "Masur Dal", 
+    "Mataki", "Methi Seeds", "Methi(Leaves)", "Millets", "Mint(Pudina)", "Moath Dal", 
+    "Mousambi(Sweet Lime)", "Muesli", "Muleti", "Muskmelon Seeds", "Mustard", "Mustard Oil", 
+    "Myrobolan(Harad)", "Nargasi", "Nearle Hannu", "Neem Seed", "Nelli Kai", "Nerium", 
+    "nigella seeds", "Niger Seed (Ramtil)", "Nutmeg", "Onion", "Onion Green", "Orange", 
+    "Orchid", "Other green and fresh vegetables", "Other Pulses", "Ox", "Paddy(Dhan)(Basmati)", 
+    "Paddy(Dhan)(Common)", "Palash flowers", "Papaya", "Papaya (Raw)", "Patti Calcutta", 
+    "Peach", "Pear(Marasebu)", "Peas cod", "Peas Wet", "Peas(Dry)", "Pegeon Pea (Arhar Fali)", 
+    "Pepper garbled", "Pepper ungarbled", "Perandai", "Persimon(Japani Fal)", "Pigs", 
+    "Pineapple", "pippali", "Plum", "Pointed gourd (Parval)", "Polherb", "Pomegranate", 
+    "Poppy capsules", "poppy seeds", "Potato", "Pumpkin", "Pundi", "Pundi Seed", "Pupadia", 
+    "Raddish", "Ragi (Finger Millet)", "Raibel", "Rajgir", "Rala", "Ram", "Ramphal", 
+    "Rat Tail Radish (Mogari)", "Ratanjot", "Raya", "Rayee", "Red Cabbage", "Red Gram", 
+    "Resinwood", "Riccbcan", "Rice", "Ridgeguard(Tori)", "Rose(Local)", "Rose(Loose))", 
+    "Rose(Tata)", "Round gourd", "Rubber", "Sabu Dan", "Safflower", "Saffron", "Sajje", 
+    "salvia", "Same/Savi", "sanay", "Sandalwood", "Sarasum", "Season Leaves", "Seegu", 
+    "Seemebadnekai", "Seetapal", "Sesamum(Sesame,Gingelly,Til)", "sevanti", "She Buffalo", 
+    "She Goat", "Sheep", "Siddota", "Siru Kizhagu", "Skin And Hide", "Snakeguard", "Soanf", 
+    "Soapnut(Antawala/Retha)", "Soha", "Soji", "Sompu", "Soyabean", "spikenard", "Spinach", 
+    "Sponge gourd", "Squash(Chappal Kadoo)", "stevia", "stone pulverizer", "Sugar", "Sugarcane", 
+    "Sundaikai", "Sunflower", "Sunflower Seed", "Sunhemp", "Suram", "Surat Beans (Papadi)", 
+    "Suva (Dill Seed)", "Suvarna Gadde", "Sweet Potato", "Sweet Pumpkin", "Sweet Sultan", 
+    "sweet william", "T.V. Cumbu", "Tamarind Fruit", "Tamarind Seed", "Tapioca", "Taramira", 
+    "Tea", "Tender Coconut", "Thinai (Italian Millet)", "Thogrikai", "Thondekai", "Tinda", 
+    "Tobacco", "Tomato", "Torchwood", "Toria", "Tube Flower", "Tube Rose(Double)", 
+    "Tube Rose(Loose)", "Tube Rose(Single)", "Tulasi", "tulip", "Turmeric", "Turmeric (raw)", 
+    "Turnip", "vadang", "Vatsanabha", "Walnut", "Water Apple", "Water chestnut", "Water Melon", 
+    "Wax", "Wheat", "Wheat Atta", "White Muesli", "White Peas", "White Pumpkin", "Wild lemon", 
+    "Wood", "Wood Apple", "Wool", "Yam", "Yam (Ratalu)"
   ]);
 
-  const states = ["Kerala", "Maharashtra", "Uttar_Pradesh", "NCT_of_Delhi"];
-
   // Fetch districts
-  const { data: districts = [], isLoading: loadingDistricts } = useQuery({
+  const { data: districts = [], isLoading: loadingDistricts, error: districtsError } = useQuery({
     queryKey: ["districts", selectedState],
     queryFn: () =>
       Ax.get(`/district?state=${encodeURIComponent(selectedState)}`).then(
@@ -475,7 +99,7 @@ const LivestockPriceApp = () => {
   });
 
   // Fetch markets
-  const { data: markets = [], isLoading: loadingMarkets } = useQuery({
+  const { data: markets = [], isLoading: loadingMarkets, error: marketsError } = useQuery({
     queryKey: ["markets", selectedState, selectedDistrict],
     queryFn: () =>
       Ax.get(
@@ -486,32 +110,20 @@ const LivestockPriceApp = () => {
     enabled: !!selectedState && !!selectedDistrict,
   });
 
-  // Fetch prices (manual trigger only)
-  const {
-    data: prices = [],
-    isLoading: loadingPrices,
-    refetch: fetchPrices,
-  } = useQuery({
-    queryKey: [
-      "data",
-      selectedState,
-      selectedDistrict,
-      selectedMarket,
-      selectedCommodity,
-    ],
-    queryFn: () =>
-      Ax.get(
-        `/data?state=${encodeURIComponent(
-          selectedState
-        )}&district=${encodeURIComponent(
-          selectedDistrict
-        )}&market=${encodeURIComponent(selectedMarket)}${
-          selectedCommodity
-            ? `&commodity=${encodeURIComponent(selectedCommodity)}`
-            : ""
-        }`
-      ).then((res) => res.data.data || []),
-    enabled: false, // only fetch when button clicked
+  // Fetch prices
+  const { data: prices = [], isLoading: loadingPrices, error: pricesError } = useQuery({
+    queryKey: ["data", selectedState, selectedDistrict, selectedMarket, selectedCommodity],
+    queryFn: () => {
+      const params = new URLSearchParams({
+        state: selectedState,
+        district: selectedDistrict,
+        market: selectedMarket,
+      });
+      if (selectedCommodity) params.append("commodity", selectedCommodity);
+
+      return Ax.get(`/data?${params.toString()}`).then((res) => res.data.data || []);
+    },
+    enabled: !!selectedState && !!selectedDistrict && !!selectedMarket,
   });
 
   const getPriceTrend = (price, index) => {
@@ -524,24 +136,16 @@ const LivestockPriceApp = () => {
   };
 
   const lastUpdated = prices.length
-    ? new Date(
-        prices[0].price_date || prices[0].last_updated
-      ).toLocaleDateString("en-IN")
+    ? new Date(prices[0].price_date || prices[0].last_updated).toLocaleDateString("en-IN")
     : null;
 
-  // CSV Export Handler
   const handleExportCSV = () => {
-    if (!prices || prices.length === 0) return alert("No data to export");
-
-    const headers = [
-      "Date",
-      "Commodity",
-      "Max Price",
-      "Min Price",
-      "Modal Price",
-      "Variety",
-      "Grade",
-    ];
+    if (!prices || !prices.length) {
+      alert("No data to export");
+      return;
+    }
+    
+    const headers = ["Date", "Commodity", "Max Price", "Min Price", "Modal Price", "Variety", "Grade"];
     const rows = prices.map((p) => [
       p.price_date ? new Date(p.price_date).toLocaleDateString("en-IN") : "N/A",
       p.commodity || "N/A",
@@ -551,8 +155,11 @@ const LivestockPriceApp = () => {
       p.variety || "N/A",
       p.grade || "N/A",
     ]);
-
-    const csvContent = [headers, ...rows].map((e) => e.join(",")).join("\n");
+    
+    const csvContent = [headers, ...rows].map((row) => 
+      row.map(field => `"${field}"`).join(",")
+    ).join("\n");
+    
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -564,13 +171,21 @@ const LivestockPriceApp = () => {
     URL.revokeObjectURL(url);
   };
 
+  // Error display component
+  const ErrorDisplay = ({ error, title }) => (
+    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+      <div className="text-red-800 font-semibold">{title}</div>
+      <div className="text-red-600 text-sm">{error?.message || "An error occurred"}</div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 pb-16">
       {/* Header */}
       <div className="bg-gradient-to-r from-green-600 to-emerald-700 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Live Prices</h1>
+            <h1 className="text-4xl font-bold mb-2">Live Commodity Prices</h1>
             <p className="text-green-100 text-lg">
               Real-time market prices for farmers across India
             </p>
@@ -584,19 +199,25 @@ const LivestockPriceApp = () => {
 
       {/* Marquee */}
       <div className="overflow-hidden bg-green-100 border-l-4 border-green-500 py-2">
-        <div className="whitespace-nowrap text-green-800 font-semibold text-lg animate-pulse">
-          New prices update everyday At{" "}
-          <span className="text-green-600 font-bold">7 AM</span>.
+        <div className="whitespace-nowrap text-green-800 font-semibold text-lg animate-pulse px-4">
+          New prices update everyday at{" "}
+          <span className="text-green-600 font-bold">7 AM</span>
         </div>
       </div>
 
-      {/* Selectors */}
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Error Messages */}
+        {districtsError && <ErrorDisplay error={districtsError} title="Failed to load districts" />}
+        {marketsError && <ErrorDisplay error={marketsError} title="Failed to load markets" />}
+        {pricesError && <ErrorDisplay error={pricesError} title="Failed to load price data" />}
+
+        {/* Selectors */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border-t-4 border-green-500">
           <h2 className="text-2xl font-semibold text-green-800 mb-6">
             📍 Select Your Location
           </h2>
-          <div className="flex  gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <SelectDropdown
               label="State"
               value={selectedState}
@@ -606,11 +227,12 @@ const LivestockPriceApp = () => {
                 setSelectedMarket("");
                 setSelectedCommodity("");
               }}
-              options={states.map((s) =>
+              options={states.map((s) => 
                 s === "NCT_of_Delhi" ? "NCT of Delhi" : s.replace("_", " ")
               )}
               placeholder="🏛️ Select State"
             />
+
             <SelectDropdown
               label="District"
               value={selectedDistrict}
@@ -620,11 +242,10 @@ const LivestockPriceApp = () => {
                 setSelectedCommodity("");
               }}
               options={districts}
-              placeholder={
-                loadingDistricts ? "Loading..." : "🏘️ Select District"
-              }
+              placeholder={loadingDistricts ? "Loading..." : "🏘️ Select District"}
               disabled={!selectedState || loadingDistricts}
             />
+
             <SelectDropdown
               label="Market"
               value={selectedMarket}
@@ -636,12 +257,13 @@ const LivestockPriceApp = () => {
               placeholder={loadingMarkets ? "Loading..." : "🏪 Select Market"}
               disabled={!selectedDistrict || loadingMarkets}
             />
+
             <SelectDropdown
               label="Commodity"
               value={selectedCommodity}
               onChange={setSelectedCommodity}
               options={commodities}
-              placeholder="🌾 Optional"
+              placeholder="🌾 Filter by commodity (Optional)"
               disabled={!selectedMarket}
             />
           </div>
@@ -660,13 +282,13 @@ const LivestockPriceApp = () => {
         {/* Prices Table */}
         {prices.length > 0 && !loadingPrices && (
           <div className="bg-white rounded-2xl shadow-xl border-t-4 border-green-500 overflow-hidden">
-            <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+            <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
                 <h2 className="text-2xl font-bold mb-1">💰 Market Prices</h2>
                 <p className="text-green-100">
                   {selectedMarket}, {selectedDistrict},{" "}
-                  {selectedState.replace("_", " ")}{" "}
-                  {selectedCommodity && `• ${selectedCommodity}`}
+                  {selectedState.replace("_", " ")}
+                  {selectedCommodity && ` • ${selectedCommodity}`}
                   <br />
                   {lastUpdated && (
                     <span className="text-sm text-green-200">
@@ -677,28 +299,28 @@ const LivestockPriceApp = () => {
               </div>
               <button
                 onClick={handleExportCSV}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors font-medium"
               >
-                Export CSV
+                📊 Export CSV
               </button>
             </div>
-
-            <div className="overflow-x-auto max-h-[500px]">
+            
+            <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
               <table className="w-full table-auto border-collapse">
                 <thead className="bg-green-100 sticky top-0">
                   <tr>
                     {[
                       "Date",
                       "Commodity",
-                      "Max Price",
-                      "Min Price",
-                      "Modal Price",
+                      "Max Price (₹)",
+                      "Min Price (₹)",
+                      "Modal Price (₹)",
                       "Variety",
                       "Grade",
                     ].map((h) => (
                       <th
                         key={h}
-                        className="px-6 py-3 text-left text-sm font-bold text-green-800"
+                        className="px-6 py-3 text-left text-sm font-bold text-green-800 border-b border-green-200"
                       >
                         {h}
                       </th>
@@ -715,46 +337,37 @@ const LivestockPriceApp = () => {
                       >
                         <td className="px-6 py-3 text-sm text-gray-800">
                           {price.price_date
-                            ? new Date(price.price_date).toLocaleDateString(
-                                "en-IN"
-                              )
+                            ? new Date(price.price_date).toLocaleDateString("en-IN")
                             : "N/A"}
                         </td>
-                        <td className="px-6 py-3 text-sm text-gray-800">
+                        <td className="px-6 py-3 text-sm text-gray-800 font-medium">
                           {price.commodity || "N/A"}
                         </td>
                         <td className="px-6 py-3 text-right font-bold text-green-700">
-                          ₹
                           {price.max_price
-                            ? parseFloat(price.max_price).toLocaleString(
-                                "en-IN"
-                              )
+                            ? parseFloat(price.max_price).toLocaleString("en-IN")
                             : "N/A"}
                         </td>
                         <td className="px-6 py-3 text-right font-bold text-green-700">
-                          ₹
                           {price.min_price
-                            ? parseFloat(price.min_price).toLocaleString(
-                                "en-IN"
-                              )
+                            ? parseFloat(price.min_price).toLocaleString("en-IN")
                             : "N/A"}
                         </td>
-                        <td className="px-6 py-3 text-right font-bold text-green-700 flex items-center justify-end gap-2">
-                          ₹
-                          {price.modal_price
-                            ? parseFloat(price.modal_price).toLocaleString(
-                                "en-IN"
-                              )
-                            : "N/A"}
-                          {trend === "up" && (
-                            <span className="text-green-500">📈</span>
-                          )}
-                          {trend === "down" && (
-                            <span className="text-red-500">📉</span>
-                          )}
-                          {trend === "stable" && (
-                            <span className="text-gray-500">➡️</span>
-                          )}
+                        <td className="px-6 py-3 text-right font-bold text-green-700">
+                          <div className="flex items-center justify-end gap-2">
+                            {price.modal_price
+                              ? parseFloat(price.modal_price).toLocaleString("en-IN")
+                              : "N/A"}
+                            {trend === "up" && (
+                              <span className="text-green-500" title="Price increased">📈</span>
+                            )}
+                            {trend === "down" && (
+                              <span className="text-red-500" title="Price decreased">📉</span>
+                            )}
+                            {trend === "stable" && (
+                              <span className="text-gray-500" title="Price stable">➡️</span>
+                            )}
+                          </div>
                         </td>
                         <td className="px-6 py-3 text-sm text-gray-800">
                           {price.variety || "N/A"}
@@ -772,14 +385,14 @@ const LivestockPriceApp = () => {
         )}
 
         {/* No Data */}
-        {!loadingPrices && prices.length === 0 && selectedMarket && (
+        {!loadingPrices && prices.length === 0 && selectedMarket && !pricesError && (
           <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
             <div className="text-6xl mb-4">🔍</div>
             <h3 className="text-2xl font-bold text-gray-600 mb-2">
               No Data Available
             </h3>
             <p className="text-gray-500">
-              No price data found for your selection.
+              No price data found for your selection. Try selecting a different market or commodity.
             </p>
           </div>
         )}
@@ -788,16 +401,9 @@ const LivestockPriceApp = () => {
   );
 };
 
-// Reusable Dropdown
-const SelectDropdown = ({
-  label,
-  value,
-  onChange,
-  options,
-  placeholder,
-  disabled,
-}) => (
-  <div>
+// Reusable Dropdown Component
+const SelectDropdown = ({ label, value, onChange, options, placeholder, disabled }) => (
+  <div className="w-full">
     <label className="block text-sm font-semibold text-green-700 mb-2">
       {label}
     </label>
@@ -805,7 +411,7 @@ const SelectDropdown = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
-      className="w-full p-4 border-2 border-green-200 rounded-xl bg-green-50 text-green-800 font-medium disabled:bg-gray-100 disabled:text-gray-500"
+      className="w-full p-4 border-2 border-green-200 rounded-xl bg-green-50 text-green-800 font-medium disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed focus:border-green-400 focus:outline-none transition-colors"
     >
       <option value="">{placeholder}</option>
       {options.map((opt, idx) => (
@@ -817,4 +423,4 @@ const SelectDropdown = ({
   </div>
 );
 
-export default LivestockPriceApp;
+export default CommodityPriceApp;
