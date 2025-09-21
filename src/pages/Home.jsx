@@ -21,7 +21,7 @@ function LandingPage() {
             Your smart farming assistant. Detect crop diseases, get AI-powered recommendations, and optimize your farm's productivity.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/explore" className="bg-green-700 text-white px-8 py-4 rounded-xl font-semibold hover:bg-green-800 transition transform hover:-translate-y-1 shadow-lg">
+            <Link to="/features" className="bg-green-700 text-white px-8 py-4 rounded-xl font-semibold hover:bg-green-800 transition transform hover:-translate-y-1 shadow-lg">
               Explore
             </Link>
             <Link to="/contact" className="bg-white text-green-700 px-8 py-4 rounded-xl font-semibold hover:bg-green-100 transition transform hover:-translate-y-1 shadow-lg">

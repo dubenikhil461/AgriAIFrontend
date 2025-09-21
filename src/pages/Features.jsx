@@ -5,7 +5,7 @@ import weatherImg from "../assets/images/weather.jpg";
 import diseaseImg from "../assets/images/plant.jpg";
 import voiceImg from "../assets/images/voice.jpg";
 import priceImg from "../assets/images/price.jpg";
-import soilImg from "../assets/images/soil.webp";
+import cropImg from "../assets/images/crop.jpg";
 import fertilizerImg from "../assets/images/fertilizer.jpg";
 
 function Features() {
@@ -35,16 +35,16 @@ function Features() {
       title: "Price Predictions",
       desc: "Predict crop market prices based on trends and historical data.",
       img: priceImg,
-      link: "/features/price-predictions",
+      link: "/features/liveprices",
       btnText: "Check Prices"
     },
     {
-      title: "Soil Analysis",
-      desc: "Analyze soil quality and get recommendations for better crop yield.",
-      img: soilImg,
-      link: "/soil",
-      btnText: "Analyze Soil"
-    },
+         title: "Crop Recommendations",
+         desc: "Discover the best crops to plant based on season, soil type, and region.",
+         img: cropImg,
+         link: "/crop-recommendation", // ✅ lowercase route
+         btnText: "Analyze Soil"
+       },
     {
       title: "Fertilizer Recommendations",
       desc: "Receive AI-powered fertilizer suggestions to optimize crop health.",

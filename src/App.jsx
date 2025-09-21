@@ -7,6 +7,8 @@ import Contact from "./pages/contact";
 import Explore from "./pages/Explore";
 import SoilPredictor from "./pages/SoilPredictor";
 import CropRecommendation from "./pages/CropRecommendation"; // ✅ Added
+import LivestockPriceApp from "./pages/LivestockPriceApp"
+import DiseaseDetector from "./components/DiseaseDetector";
 import "./style/app.css";
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/explore" element={<Explore />} />
           <Route path="/soil" element={<SoilPredictor />} />
           <Route path="/crop-recommendation" element={<CropRecommendation />} />
+          <Route path="/features/liveprices" element={<LivestockPriceApp />} /> {/* ✅ Added route */}
+          <Route path="/features/disease-detector" element={<DiseaseDetector />} /> {/* ✅ Added route */}
         </Routes>
       </div>
     </div>

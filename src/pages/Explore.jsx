@@ -1,25 +1,10 @@
 import { Link } from "react-router-dom";
-
-import cropImg from "../assets/images/crop.jpg";
-import marketImg from "../assets/images/market.jpg";
 import tutorialsImg from "../assets/images/tutorial.webp";
 import newsImg from "../assets/images/government.webp";
-import aiImg from "../assets/images/ai.jpg";
 import toolsImg from "../assets/images/tools.jpg";
 
 function Explore() {
   const exploreItems = [
-    {
-      title: "Crop Recommendations",
-      desc: "Discover the best crops to plant based on season, soil type, and region.",
-      img: cropImg,
-      link: "/crop-recommendation" // ✅ lowercase route
-    },
-    {
-      title: "Market Prices & Trends",
-      desc: "Check current and historical crop prices with trend visualizations.",
-      img: marketImg
-    },
     {
       title: "Tutorials & Guides",
       desc: "Step-by-step guides on planting, harvesting, pest control, and fertilizers.",
@@ -29,11 +14,6 @@ function Explore() {
       title: "Agricultural News",
       desc: "Stay updated with the latest news, schemes, and farming tips.",
       img: newsImg
-    },
-    {
-      title: "AI Insights",
-      desc: "Get predictive insights on planting schedules, yield, and disease alerts.",
-      img: aiImg
     },
     {
       title: "Farm Tools & Equipment",

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-
+import Ax from '../utils/Axios'
 const CropRecommendation = () => {
   const [inputs, setInputs] = useState({
     N: "",
@@ -27,8 +26,8 @@ const CropRecommendation = () => {
     setRecommendedCrop("");
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/recommend-crop",
+      const response = await Ax.post(
+        "/recommend-crop",
         inputs,
         { headers: { "Content-Type": "application/json" } }
       );

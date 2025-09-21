@@ -156,9 +156,15 @@ function WeatherCalendar() {
 
   return (
     <div className="max-w-6xl mx-auto mt-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl shadow-lg">
-      <h1 className="text-3xl font-bold text-center mb-6 text-indigo-800">
-        Weather Calendar
-      </h1>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-center text-indigo-800 mb-2">
+          Weather Calendar
+        </h1>
+        <h4 className="text-red-900 text-center">
+          <span className="font-bold">Note:</span> Forecasts are indicative
+          only. Accuracy cannot be guaranteed.
+        </h4>
+      </div>
 
       {/* Add City Section */}
       <div className="mb-6 bg-white p-4 rounded-lg shadow">
