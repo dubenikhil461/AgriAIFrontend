@@ -1,17 +1,21 @@
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, LogOut } from "lucide-react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../AuthContext";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useContext(AuthContext);
 
-  const navLinks = [
-    { name: "Home", path: "/" },
+  const publicLinks = [{ name: "Home", path: "/" }];
+  const protectedLinks = [
     { name: "Features", path: "/features" },
     { name: "Explore", path: "/explore" },
     { name: "Contact", path: "/contact" },
   ];
+
+  const navLinks = user ? [...publicLinks, ...protectedLinks] : publicLinks;
 
   return (
     <nav className="bg-gradient-to-r from-green-600 to-green-800 text-white px-6 py-4 flex justify-between items-center sticky top-0 z-50 shadow-lg">
@@ -22,7 +26,7 @@ function Header() {
       </div>
 
       {/* Desktop Navigation */}
-      <ul className="hidden md:flex space-x-6 font-medium">
+      <ul className="hidden md:flex space-x-6 font-medium items-center">
         {navLinks.map((link, index) => (
           <li key={index}>
             <Link
@@ -34,14 +38,21 @@ function Header() {
               }`}
             >
               {link.name}
-              <span
-                className={`absolute left-0 bottom-0 h-[2px] bg-yellow-300 transition-all duration-300 ${
-                  location.pathname === link.path ? "w-full" : "w-0 group-hover:w-full"
-                }`}
-              ></span>
             </Link>
           </li>
         ))}
+
+        {/* Show Logout if user is logged in */}
+        {user && (
+          <li>
+            <button
+              onClick={logout}
+              className="flex items-center px-3 py-2 hover:text-yellow-300 transition duration-300"
+            >
+              <LogOut size={18} className="mr-1" /> Logout
+            </button>
+          </li>
+        )}
       </ul>
 
       {/* Mobile Menu Button */}
@@ -70,6 +81,17 @@ function Header() {
               </Link>
             </li>
           ))}
+
+          {user && (
+            <li>
+              <button
+                onClick={logout}
+                className="flex items-center px-4 py-2 rounded-lg hover:bg-green-600 hover:text-yellow-300 transition duration-300"
+              >
+                <LogOut size={18} className="mr-1" /> Logout
+              </button>
+            </li>
+          )}
         </ul>
       )}
     </nav>

@@ -20,14 +20,6 @@ function LandingPage() {
           <p className="text-xl md:text-2xl text-white mb-8 max-w-2xl">
             Your smart farming assistant. Detect crop diseases, get AI-powered recommendations, and optimize your farm's productivity.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/features" className="bg-green-700 text-white px-8 py-4 rounded-xl font-semibold hover:bg-green-800 transition transform hover:-translate-y-1 shadow-lg">
-              Explore
-            </Link>
-            <Link to="/contact" className="bg-white text-green-700 px-8 py-4 rounded-xl font-semibold hover:bg-green-100 transition transform hover:-translate-y-1 shadow-lg">
-              Contact Us
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -37,10 +29,10 @@ function LandingPage() {
         <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
           Join thousands of farmers leveraging AI for better crop yield, disease management, and smarter farm decisions.
         </p>
-        <Link to="/signup" className="bg-white text-green-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition transform hover:-translate-y-1 shadow-lg">
+        <Link to="/login" className="bg-white text-green-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition transform hover:-translate-y-1 shadow-lg">
           Get Started
         </Link>
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle,_#ffffff_0%,_transparent_70%)] opacity-20 -z-10"></div>
+        <div className="absolutfeaturese top-0 left-0 w-full h-full bg-[radial-gradient(circle,_#ffffff_0%,_transparent_70%)] opacity-20 -z-10"></div>
       </section>
 
       {/* Stats Section */}
