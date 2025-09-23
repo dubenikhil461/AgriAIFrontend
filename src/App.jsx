@@ -9,6 +9,7 @@ import SoilPredictor from "./pages/SoilPredictor";
 import CropRecommendation from "./pages/CropRecommendation";
 import LivestockPriceApp from "./pages/LivestockPriceApp";
 import DiseaseDetector from "./components/DiseaseDetector";
+import VoiceAssistant from "./components/VoiceAssistant.jsx"
 import Login from './pages/Login'
 import ProtectedRoute from "./ProtectedRoute"; // ✅ Import
 import { AuthProvider } from "./AuthContext";   // ✅ Import
@@ -87,6 +88,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <DiseaseDetector />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/features/voice-assistant"
+              element={
+                <ProtectedRoute>
+                  <VoiceAssistant />
                 </ProtectedRoute>
               }
             />

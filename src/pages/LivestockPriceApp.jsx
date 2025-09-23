@@ -602,7 +602,7 @@ const CommodityPriceApp = () => {
       <div className="overflow-hidden bg-green-100 border-l-4 border-green-500 py-2">
         <div className="whitespace-nowrap text-green-800 font-semibold text-lg animate-pulse px-4">
           New prices update everyday at{" "}
-          <span className="text-green-600 font-bold">7 AM</span>
+          <span className="text-green-600 font-bold">11:30PM</span>
         </div>
         <div className="whitespace-nowrap text-green-700 text-sm px-4 italic">
           Note: Some price dates may remain the same if Agmarknet has not
