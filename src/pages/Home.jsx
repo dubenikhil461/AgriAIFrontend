@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import Chatbot from "../components/Chatbot";
+// import Chatbot from "../components/Chatbot";
 import { AuthContext } from "../AuthContext"; // adjust path
 import farmImage from "../assets/farm.jpg"; // Import your image
 
@@ -86,7 +86,7 @@ function LandingPage() {
       </footer>
 
       {/* Chatbot */}
-      <Chatbot />
+      {/* <Chatbot /> */}
     </div>
   );
 }
