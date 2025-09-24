@@ -14,7 +14,7 @@ function Features() {
       title: "Weather Forecast",
       desc: "Get accurate weather predictions for your crops and plan accordingly.",
       img: weatherImg,
-      link: "/weather",
+      link: "/features/weather",
       btnText: "Learn More"
     },
     {
@@ -42,7 +42,7 @@ function Features() {
          title: "Crop Recommendations",
          desc: "Discover the best crops to plant based on season, soil type, and region.",
          img: cropImg,
-         link: "/crop-recommendation", // ✅ lowercase route
+         link: "/features/crop-recommendation", // ✅ lowercase route
          btnText: "Analyze Soil"
        },
     {

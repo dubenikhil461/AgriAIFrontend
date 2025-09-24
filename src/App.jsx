@@ -5,11 +5,11 @@ import Weather from "./components/Weather";
 import Features from "./pages/Features";
 import Contact from "./pages/Contact";
 import Explore from "./pages/Explore";
-import SoilPredictor from "./pages/SoilPredictor";
 import CropRecommendation from "./pages/CropRecommendation";
 import LivestockPriceApp from "./pages/LivestockPriceApp";
 import DiseaseDetector from "./components/DiseaseDetector";
-import VoiceAssistant from "./components/VoiceAssistant.jsx"
+import VoiceAssistant from "./components/FarmerFriend.jsx"
+import FertilizerRecommendationApp from "./components/FertilizerRecommendationApp.jsx";
 import Login from './pages/Login'
 import ProtectedRoute from "./ProtectedRoute"; // ✅ Import
 import { AuthProvider } from "./AuthContext";   // ✅ Import
@@ -60,15 +60,7 @@ function App() {
               }
             />
             <Route
-              path="/soil"
-              element={
-                <ProtectedRoute>
-                  <SoilPredictor />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/crop-recommendation"
+              path="/features/crop-recommendation"
               element={
                 <ProtectedRoute>
                   <CropRecommendation />
@@ -96,6 +88,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <VoiceAssistant />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/features/fertilizer-recommendations"
+              element={
+                <ProtectedRoute>
+                  <FertilizerRecommendationApp />
                 </ProtectedRoute>
               }
             />
