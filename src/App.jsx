@@ -28,7 +28,7 @@ function App() {
 
             {/* Protected Routes */}
             <Route
-              path="/Weather"
+              path="/features/weather"
               element={
                 <ProtectedRoute>
                   <Weather />
