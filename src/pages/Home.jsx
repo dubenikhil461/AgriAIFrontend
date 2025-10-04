@@ -28,7 +28,6 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Call-to-Action Section */}
       <section className="bg-green-900 text-white py-24 px-6 text-center relative overflow-hidden">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">
           Start Smart Farming Today
