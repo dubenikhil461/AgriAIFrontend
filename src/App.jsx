@@ -8,11 +8,8 @@ import Explore from "./pages/Explore";
 import CropRecommendation from "./pages/CropRecommendation";
 import LivestockPriceApp from "./pages/LivestockPriceApp";
 import DiseaseDetector from "./components/DiseaseDetector";
-import VoiceAssistant from "./components/FarmerFriend.jsx"
+import VoiceAssistant from "./components/FarmerFriend.jsx";
 import FertilizerRecommendationApp from "./components/FertilizerRecommendationApp.jsx";
-import Login from './pages/Login'
-import ProtectedRoute from "./ProtectedRoute"; // ✅ Import
-import { AuthProvider } from "./AuthContext";   // ✅ Import
 import "./style/app.css";
 
 function App() {
@@ -24,80 +21,31 @@ function App() {
           <Routes>
             {/* Public Route */}
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
 
             {/* Protected Routes */}
-            <Route
-              path="/features/weather"
-              element={
-                <ProtectedRoute>
-                  <Weather />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/features"
-              element={
-                <ProtectedRoute>
-                  <Features />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <ProtectedRoute>
-                  <Contact />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/explore"
-              element={
-                <ProtectedRoute>
-                  <Explore />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/features/weather" element={<Weather />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/explore" element={<Explore />} />
             <Route
               path="/features/crop-recommendation"
-              element={
-                <ProtectedRoute>
-                  <CropRecommendation />
-                </ProtectedRoute>
-              }
+              element={<CropRecommendation />}
             />
             <Route
               path="/features/liveprices"
-              element={
-                <ProtectedRoute>
-                  <LivestockPriceApp />
-                </ProtectedRoute>
-              }
+              element={<LivestockPriceApp />}
             />
             <Route
               path="/features/disease-detector"
-              element={
-                <ProtectedRoute>
-                  <DiseaseDetector />
-                </ProtectedRoute>
-              }
+              element={<DiseaseDetector />}
             />
             <Route
               path="/features/voice-assistant"
-              element={
-                <ProtectedRoute>
-                  <VoiceAssistant />
-                </ProtectedRoute>
-              }
+              element={<VoiceAssistant />}
             />
             <Route
               path="/features/fertilizer-recommendations"
-              element={
-                <ProtectedRoute>
-                  <FertilizerRecommendationApp />
-                </ProtectedRoute>
-              }
+              element={<FertilizerRecommendationApp />}
             />
           </Routes>
         </div>

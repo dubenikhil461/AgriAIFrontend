@@ -39,7 +39,7 @@ function LandingPage() {
         </p>
         {!user && (
           <Link
-            to="/login"
+            to="/features"
             className="bg-white text-green-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition transform hover:-translate-y-1 shadow-lg"
           >
             Get Started

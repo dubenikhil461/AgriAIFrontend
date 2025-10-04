@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import App from "./App";
 import "./style/app.css";
@@ -19,7 +18,6 @@ const persister = createSyncStoragePersister({
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="763951318228-2lc507uh46rc4f9tdm7gmf185evu9jgh.apps.googleusercontent.com">
       <BrowserRouter>
         <PersistQueryClientProvider
           client={queryClient}
@@ -28,6 +26,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <App />
         </PersistQueryClientProvider>
       </BrowserRouter>
-    </GoogleOAuthProvider>
   </React.StrictMode>
 );
