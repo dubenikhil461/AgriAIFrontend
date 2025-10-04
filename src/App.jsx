@@ -14,7 +14,6 @@ import "./style/app.css";
 
 function App() {
   return (
-    <AuthProvider>
       <div className="App">
         <Header />
         <div className="p-4">
@@ -50,7 +49,6 @@ function App() {
           </Routes>
         </div>
       </div>
-    </AuthProvider>
   );
 }
 
