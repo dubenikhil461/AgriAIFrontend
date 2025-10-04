@@ -1,21 +1,18 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogOut } from "lucide-react";
-import { useState, useContext } from "react";
-import { AuthContext } from "../AuthContext";
+import { Menu, X } from "lucide-react";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { user, logout } = useContext(AuthContext);
 
-  const publicLinks = [{ name: "Home", path: "/" }];
-  const protectedLinks = [
+  // ✅ Show all 4 links always
+  const navLinks = [
+    { name: "Home", path: "/" },
     { name: "Features", path: "/features" },
     { name: "Explore", path: "/explore" },
     { name: "Contact", path: "/contact" },
   ];
-
-  const navLinks = user ? [...publicLinks, ...protectedLinks] : publicLinks;
 
   return (
     <nav className="bg-gradient-to-r from-green-600 to-green-800 text-white px-6 py-4 flex justify-between items-center sticky top-0 z-50 shadow-lg">
@@ -41,18 +38,6 @@ function Header() {
             </Link>
           </li>
         ))}
-
-        {/* Show Logout if user is logged in */}
-        {user && (
-          <li>
-            <button
-              onClick={logout}
-              className="flex items-center px-3 py-2 hover:text-yellow-300 transition duration-300"
-            >
-              <LogOut size={18} className="mr-1" /> Logout
-            </button>
-          </li>
-        )}
       </ul>
 
       {/* Mobile Menu Button */}
@@ -81,17 +66,6 @@ function Header() {
               </Link>
             </li>
           ))}
-
-          {user && (
-            <li>
-              <button
-                onClick={logout}
-                className="flex items-center px-4 py-2 rounded-lg hover:bg-green-600 hover:text-yellow-300 transition duration-300"
-              >
-                <LogOut size={18} className="mr-1" /> Logout
-              </button>
-            </li>
-          )}
         </ul>
       )}
     </nav>
