@@ -1,17 +1,13 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-// import Chatbot from "../components/Chatbot";
-import { AuthContext } from "../AuthContext"; // adjust path
 import farmImage from "../assets/farm.jpg"; // Import your image
 
 function LandingPage() {
-  const { user } = useContext(AuthContext);
   return (
     <div className="font-sans min-h-screen relative bg-green-100">
       {/* Hero Section with Farm Image */}
       <section
         className="relative flex flex-col items-center justify-center text-center py-32 px-6 bg-cover bg-center"
-        style={{ backgroundImage: `url(${farmImage})` }} // Use imported image
+        style={{ backgroundImage: `url(${farmImage})` }}
       >
         {/* Overlay for readability */}
         <div className="absolute inset-0 bg-black/30"></div>
@@ -28,6 +24,7 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* CTA Section */}
       <section className="bg-green-900 text-white py-24 px-6 text-center relative overflow-hidden">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">
           Start Smart Farming Today
@@ -36,15 +33,16 @@ function LandingPage() {
           Join thousands of farmers leveraging AI for better crop yield, disease
           management, and smarter farm decisions.
         </p>
-        {!user && (
-          <Link
-            to="/features"
-            className="bg-white text-green-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition transform hover:-translate-y-1 shadow-lg"
-          >
-            Get Started
-          </Link>
-        )}
-        <div className="absolutfeaturese top-0 left-0 w-full h-full bg-[radial-gradient(circle,_#ffffff_0%,_transparent_70%)] opacity-20 -z-10"></div>
+
+        {/* ✅ Always show Get Started */}
+        <Link
+          to="/features"
+          className="bg-white text-green-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition transform hover:-translate-y-1 shadow-lg"
+        >
+          Get Started
+        </Link>
+
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle,_#ffffff_0%,_transparent_70%)] opacity-20 -z-10"></div>
       </section>
 
       {/* Stats Section */}
@@ -83,9 +81,6 @@ function LandingPage() {
       <footer className="bg-green-900 text-white py-8 text-center">
         <p>&copy; {new Date().getFullYear()} AgriAI. All rights reserved.</p>
       </footer>
-
-      {/* Chatbot */}
-      {/* <Chatbot /> */}
     </div>
   );
 }
