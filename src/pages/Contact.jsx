@@ -19,21 +19,21 @@ function Contact() {
       college: "Lokmanya Tilak College of Engineering", 
       branch: "CSE(IOT)",
     },
-    { 
-      name: "Pratik Gupta", 
-      college: "Lokmanya Tilak College of Engineering", 
-      branch: "CSE(IOT)",
-    },
+    // { 
+    //   name: "Pratik Gupta", 
+    //   college: "Lokmanya Tilak College of Engineering", 
+    //   branch: "CSE(IOT)",
+    // },
     { 
       name: "Nikhil Dubey", 
       college: "Lokmanya Tilak College of Engineering", 
       branch: "CSE(IOT)",
     },
-    { 
-      name: "Harshvi Kumari", 
-      college: "Lokmanya Tilak College of Engineering", 
-      branch: "CSE(AI/ML)",
-    },
+    // { 
+    //   name: "Harshvi Kumari", 
+    //   college: "Lokmanya Tilak College of Engineering", 
+    //   branch: "CSE(AI/ML)",
+    // },
     { 
       name: "Aryan Shedge", 
       college: "Lokmanya Tilak College of Engineering", 

@@ -32,7 +32,7 @@ function Features() {
       btnText: "Try Now"
     },
     {
-      title: "Price Predictions",
+      title: "Live Price",
       desc: "Predict crop market prices based on trends and historical data.",
       img: priceImg,
       link: "/features/liveprices",

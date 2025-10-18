@@ -21,32 +21,90 @@ function FarmerFriend() {
   };
 
   // Multilingual query responses for Kerala
-  const queryDatabase = {
-    "weather": {
-      responses: {
-        "en-US": "Today's weather in Kerala is partly cloudy with a chance of rain. The temperature is around 29°C with 83% humidity. It's advisable to be prepared for showers.",
-        "ml-IN": "ഇന്നത്തെ കേരളത്തിലെ കാലാവസ്ഥ ഭാഗികമായി മേഘാവൃതമാണ്, മഴയ്ക്ക് സാധ്യതയുണ്ട്. താപനില 29°C ആണ്, ആർദ്രത 83% ആണ്. മഴയ്ക്ക് തയ്യാറാകുന്നത് നല്ലതാണ്.",
-      },
-      icon: <Sun className="w-5 h-5 text-yellow-500" />,
-      category: "Weather"
+  // Multilingual query responses for Panvel
+const queryDatabase = {
+  // Weather information
+  "weather": {
+    responses: {
+      "en-US": "Today's weather in Panvel is sunny with scattered clouds. The temperature is around 32°C with 70% humidity. Light breeze from the west.",
+      "ml-IN": "ഇന്നത്തെ പാണവേലിലെ കാലാവസ്ഥ സൂര്യപ്രകാശമുള്ളവയും ചില മേഘങ്ങളുള്ളവയും ആണ്. താപനില 32°C ആണ്, ആർദ്രത 70% ആണ്. പടിഞ്ഞാറ് ഭാഗത്ത് ചെറിയ കാറ്റ് വീശുന്നു.",
     },
-    "price": {
-      responses: {
-        "en-US": "Current market prices in Kerala: Rice ₹50/kg, Coconut ₹35/piece, Rubber ₹175/kg, Pepper ₹700/kg.",
-        "ml-IN": "കേരളത്തിലെ ഇപ്പോഴത്തെ വിപണി വില: അരി ₹50/കിലോ, തേങ്ങ ₹35/എണ്ണം, റബ്ബർ ₹175/കിലോ, കുരുമുളക് ₹700/കിലോ.",
-      },
-      icon: <TrendingUp className="w-5 h-5 text-green-600" />,
-      category: "Market"
+    icon: <Sun className="w-5 h-5 text-yellow-500" />,
+    category: "Weather"
+  },
+
+  // Crop tips
+  "crop tips": {
+    responses: {
+      "en-US": "For Panvel, ensure proper irrigation and use organic compost for better yield. Avoid planting during heavy rains.",
+      "ml-IN": "പാണവേലിനുള്ള കൃഷി, ശരിയായ ജലീകരണം ഉറപ്പാക്കുകയും, മികച്ച വിളവിനായി ജൈവ മലച്ചെടി ഉപയോഗിക്കുകയും ചെയ്യുക. ശക്തമായ മഴക്കാലത്ത് നടുന്നത് ഒഴിവാക്കുക.",
     },
-    "help": {
-      responses: {
-        "en-US": "I am FarmerFriend, your agricultural assistant for Kerala! Ask me about weather, market prices, farming tips, and more!",
-        "ml-IN": "ഞാൻ ഫാർമർഫ്രണ്ട്, കേരളത്തിലെ നിങ്ങളുടെ കാർഷിക സഹായി! കാലാവസ്ഥ, വിപണി വില, കൃഷി നുറുങ്ങുകൾ എന്നിവയെക്കുറിച്ച് എന്നോട് ചോദിക്കൂ!",
-      },
-      icon: <Sparkles className="w-5 h-5 text-green-600" />,
-      category: "Assistant"
-    }
-  };
+    icon: <MapPin className="w-5 h-5 text-green-600" />,
+    category: "Farming Tips"
+  },
+
+  // Soil tips
+  "soil tips": {
+    responses: {
+      "en-US": "Check soil pH regularly. Panvel soil is generally slightly acidic. Add lime to increase pH or organic matter to improve fertility.",
+      "ml-IN": "മണ്ണിന്റെ pH പതിവായി പരിശോധിക്കുക. പാണവേലിന്റെ മണ്ണ് സാധാരണയായി അല്പം അമ്ലമാണ്. pH കൂട്ടാൻ ചുണ്ണം ചേർക്കുക അല്ലെങ്കിൽ ഉൽപ്പാദനക്ഷമത മെച്ചപ്പെടുത്താൻ ജൈവ പദാർത്ഥങ്ങൾ ചേർക്കുക.",
+    },
+    icon: <Globe className="w-5 h-5 text-yellow-600" />,
+    category: "Soil"
+  },
+
+  // Pest control
+  "pest control": {
+    responses: {
+      "en-US": "Common pests in Panvel include aphids and caterpillars. Use neem oil spray or trap crops to reduce infestation.",
+      "ml-IN": "പാണവേലിലെ സാധാരണ കീടങ്ങൾ ആഫിഡുകൾ, ചീറ്റകൾ എന്നിവയാണ്. കീടങ്ങളെ കുറയ്ക്കാൻ നീം ഓയിൽ സ്പ്രേ ചെയ്യുക അല്ലെങ്കിൽ ട്രാപ്പ് ക്രോപ്പുകൾ ഉപയോഗിക്കുക.",
+    },
+    icon: <AlertTriangle className="w-5 h-5 text-red-500" />,
+    category: "Pest Control"
+  },
+
+  // Irrigation advice
+  "irrigation": {
+    responses: {
+      "en-US": "Irrigate early morning or late evening to reduce water loss. Drip irrigation is recommended for vegetables.",
+      "ml-IN": "ജലവിതരണം രാവിലെ മുടിയിലും വൈകുന്നേരം ചെയ്യുക, ജലക്ഷയം കുറയ്ക്കാൻ. പച്ചക്കറികൾക്കായി ഡ്രിപ് സിസ്റ്റം ഉപയോഗിക്കുന്നത് നല്ലതാണ്.",
+    },
+    icon: <TrendingUp className="w-5 h-5 text-blue-500" />,
+    category: "Irrigation"
+  },
+
+  // Fertilizer guidance
+  "fertilizer": {
+    responses: {
+      "en-US": "Use balanced NPK fertilizers. For rice, nitrogen in early growth, phosphorus at transplanting, potassium during tillering is ideal.",
+      "ml-IN": "സമതുലിത NPK ഉത്പന്നങ്ങൾ ഉപയോഗിക്കുക. അരിക്ക്, തുടക്കത്തിൽ നൈട്രജൻ, തൈകൾ നട്ടപ്പോൾ ഫോസ്ഫറസ്, ടില്ലറിംഗിനിടെ പൊട്ടാസ്യം നൽകുന്നത് ഉചിതമാണ്.",
+    },
+    icon: <Sparkles className="w-5 h-5 text-green-600" />,
+    category: "Fertilizer"
+  },
+
+  // Market trends (instead of price)
+  "market trends": {
+    responses: {
+      "en-US": "Local market demand in Panvel is high for vegetables like tomato and brinjal this week. Consider harvesting accordingly.",
+      "ml-IN": "ഈ ആഴ്ച പാണവേലിലെ സ്ഥാനിക വിപണിയിൽ തക്കാളി, വാഴക്ക, തുടങ്ങിയ പച്ചക്കറികളുടെ ആവശ്യകത ഉയർന്നിരിക്കുന്നു. വിളവെടുപ്പ് അനുസരിച്ച് പണിയെടുക്കുക.",
+    },
+    icon: <TrendingUp className="w-5 h-5 text-green-600" />,
+    category: "Market"
+  },
+
+  // Help
+  "help": {
+    responses: {
+      "en-US": "I am FarmerFriend, your agricultural assistant for Panvel! Ask me about weather, crop tips, soil, pests, irrigation, fertilizer, and market trends.",
+      "ml-IN": "ഞാൻ ഫാർമർഫ്രണ്ട്, പാണവേലിലെ നിങ്ങളുടെ കാർഷിക സഹായി! കാലാവസ്ഥ, വിള ചിന്തകൾ, മണ്ണ്, കീടങ്ങൾ, ജലവിതരണം, ഉത്പാദകങ്ങൾ, വിപണി പ്രവണതകൾ എന്നിവയെക്കുറിച്ച് ചോദിക്കൂ!",
+    },
+    icon: <Sparkles className="w-5 h-5 text-green-600" />,
+    category: "Assistant"
+  }
+};
+
+
 
   const initializeSpeechRecognition = () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
