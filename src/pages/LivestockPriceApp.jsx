@@ -1,883 +1,256 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import Ax from "../utils/Axios";
+import Ax from "../utils/Axios.js"
 
-const CommodityPriceApp = () => {
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [selectedMarket, setSelectedMarket] = useState("");
-  const [selectedCommodity, setSelectedCommodity] = useState("");
-
-  const states = ["Kerala", "Maharashtra", "Uttar_Pradesh", "NCT_of_Delhi"];
-  const [commodities] = useState([
-    "Absinthe",
-    "Ajwan",
-    "Alasande Gram",
-    "Almond(Badam)",
-    "Alsandikai",
-    "Amaranthus",
-    "Ambada Seed",
-    "Ambady/Mesta",
-    "Amla(Nelli Kai)",
-    "Amphophalus",
-    "Amranthas Red",
-    "Antawala",
-    "Anthorium",
-    "Apple",
-    "Apricot(Jardalu/Khumani)",
-    "Arecanut(Betelnut/Supari)",
-    "Arhar (Tur/Red Gram)(Whole)",
-    "Arhar Dal(Tur Dal)",
-    "Asalia",
-    "Asgand",
-    "Ashgourd",
-    "Ashoka",
-    "Ashwagandha",
-    "Asparagus",
-    "Astera",
-    "Atis",
-    "Avare Dal",
-    "Bael",
-    "Bajji chilli",
-    "Bajra(Pearl Millet/Cumbu)",
-    "Balekai",
-    "balsam",
-    "Bamboo",
-    "Banana",
-    "Banana - Green",
-    "Banana flower",
-    "Banana Leaf",
-    "Banana stem",
-    "Barley (Jau)",
-    "basil",
-    "Bay leaf (Tejpatta)",
-    "Beans",
-    "Beaten Rice",
-    "Beetroot",
-    "Behada",
-    "Bengal Gram Dal (Chana Dal)",
-    "Bengal Gram(Gram)(Whole)",
-    "Ber(Zizyphus/Borehannu)",
-    "Betal Leaves",
-    "Betelnuts",
-    "Bhindi(Ladies Finger)",
-    "Bhui Amlaya",
-    "Big Gram",
-    "Binoula",
-    "Bitter gourd",
-    "Black Gram (Urd Beans)(Whole)",
-    "Black Gram Dal (Urd Dal)",
-    "Black pepper",
-    "BOP",
-    "Borehannu",
-    "Bottle gourd",
-    "Brahmi",
-    "Bran",
-    "Bread Fruit",
-    "Brinjal",
-    "Brocoli",
-    "Broken Rice",
-    "Broomstick(Flower Broom)",
-    "Bull",
-    "Bullar",
-    "Bunch Beans",
-    "Butter",
-    "buttery",
-    "Cabbage",
-    "Calendula",
-    "Calf",
-    "Camel Hair",
-    "Cane",
-    "Capsicum",
-    "Cardamoms",
-    "Carnation",
-    "Carrot",
-    "Cashew Kernnel",
-    "Cashewnuts",
-    "Castor Oil",
-    "Castor Seed",
-    "Cauliflower",
-    "Chakotha",
-    "Chandrashoor",
-    "Chapparad Avare",
-    "Chennangi (Whole)",
-    "Chennangi Dal",
-    "Cherry",
-    "Chikoos(Sapota)",
-    "Chili Red",
-    "Chilly Capsicum",
-    "Chironji",
-    "Chow Chow",
-    "Chrysanthemum",
-    "Chrysanthemum(Loose)",
-    "Cinamon(Dalchini)",
-    "cineraria",
-    "Clarkia",
-    "Cloves",
-    "Cluster beans",
-    "Coca",
-    "Cock",
-    "Cocoa",
-    "Coconut",
-    "Coconut Oil",
-    "Coconut Seed",
-    "Coffee",
-    "Colacasia",
-    "Copra",
-    "Coriander(Leaves)",
-    "Corriander seed",
-    "Cossandra",
-    "Cotton",
-    "Cotton Seed",
-    "Cow",
-    "Cowpea (Lobia/Karamani)",
-    "Cowpea(Veg)",
-    "Cucumbar(Kheera)",
-    "Cummin Seed(Jeera)",
-    "Curry Leaf",
-    "Custard Apple (Sharifa)",
-    "Daila(Chandni)",
-    "Dal (Avare)",
-    "Dalda",
-    "Delha",
-    "Dhaincha",
-    "dhawai flowers",
-    "dianthus",
-    "Double Beans",
-    "Dragon fruit",
-    "dried mango",
-    "Drumstick",
-    "Dry Chillies",
-    "Dry Fodder",
-    "Dry Grapes",
-    "Duck",
-    "Duster Beans",
-    "Egg",
-    "Egypian Clover(Barseem)",
-    "Elephant Yam (Suran)",
-    "Field Pea",
-    "Fig(Anjura/Anjeer)",
-    "Firewood",
-    "Fish",
-    "Flax seeds",
-    "Flower Broom",
-    "Foxtail Millet(Navane)",
-    "French Beans (Frasbean)",
-    "Galgal(Lemon)",
-    "Gamphrena",
-    "Garlic",
-    "Ghee",
-    "Giloy",
-    "Gingelly Oil",
-    "Ginger(Dry)",
-    "Ginger(Green)",
-    "Gladiolus Bulb",
-    "Gladiolus Cut Flower",
-    "Glardia",
-    "Goat",
-    "Goat Hair",
-    "golden rod",
-    "Gond",
-    "Goose berry (Nellikkai)",
-    "Gram Raw(Chholia)",
-    "Gramflour",
-    "Grapes",
-    "Green Avare (W)",
-    "Green Chilli",
-    "Green Fodder",
-    "Green Gram (Moong)(Whole)",
-    "Green Gram Dal (Moong Dal)",
-    "Green Peas",
-    "Ground Nut Oil",
-    "Ground Nut Seed",
-    "Groundnut",
-    "Groundnut (Split)",
-    "Groundnut pods (raw)",
-    "Guar",
-    "Guar Seed(Cluster Beans Seed)",
-    "Guava",
-    "Gudmar",
-    "Guggal",
-    "gulli",
-    "Gur(Jaggery)",
-    "Gurellu",
-    "gypsophila",
-    "Haralekai",
-    "Harrah",
-    "He Buffalo",
-    "Heliconia species",
-    "Hen",
-    "Hippe Seed",
-    "Honey",
-    "Honge seed",
-    "Hybrid Cumbu",
-    "hydrangea",
-    "Indian Beans (Seam)",
-    "Indian Colza(Sarson)",
-    "Irish",
-    "Isabgul (Psyllium)",
-    "Jack Fruit",
-    "Jaee",
-    "Jaffri",
-    "Jaggery",
-    "Jamamkhan",
-    "Jamun(Narale Hannu)",
-    "Jarbara",
-    "Jasmine",
-    "Javi",
-    "Jowar(Sorghum)",
-    "Jute",
-    "Jute Seed",
-    "Kabuli Chana(Chickpeas-White)",
-    "Kacholam",
-    "Kakada",
-    "kakatan",
-    "Kalihari",
-    "Kalmegh",
-    "Kankambra",
-    "Karamani",
-    "karanja seeds",
-    "Karbuja(Musk Melon)",
-    "Kartali (Kantola)",
-    "Kevda",
-    "Kharif Mash",
-    "Khirni",
-    "Khoya",
-    "Kinnow",
-    "Knool Khol",
-    "Kodo Millet(Varagu)",
-    "kokum",
-    "Kooth",
-    "Kuchur",
-    "Kulthi(Horse Gram)",
-    "Kutki",
-    "kutki",
-    "Ladies Finger",
-    "Laha",
-    "Lak(Teora)",
-    "Leafy Vegetable",
-    "Lemon",
-    "Lentil (Masur)(Whole)",
-    "Lilly",
-    "Lime",
-    "Limonia (status)",
-    "Linseed",
-    "Lint",
-    "liquor turmeric",
-    "Litchi",
-    "Little gourd (Kundru)",
-    "Long Melon(Kakri)",
-    "Lotus",
-    "Lotus Sticks",
-    "Lukad",
-    "Lupine",
-    "Ma.Inji",
-    "Mace",
-    "macoy",
-    "Mahedi",
-    "Mahua",
-    "Mahua Seed(Hippe seed)",
-    "Maida Atta",
-    "Maize",
-    "Mango",
-    "Mango (Raw-Ripe)",
-    "mango powder",
-    "Maragensu",
-    "Marasebu",
-    "Marget",
-    "Marigold(Calcutta)",
-    "Marigold(loose)",
-    "Marikozhunthu",
-    "Mash",
-    "Mashrooms",
-    "Masur Dal",
-    "Mataki",
-    "Methi Seeds",
-    "Methi(Leaves)",
-    "Millets",
-    "Mint(Pudina)",
-    "Moath Dal",
-    "Mousambi(Sweet Lime)",
-    "Muesli",
-    "Muleti",
-    "Muskmelon Seeds",
-    "Mustard",
-    "Mustard Oil",
-    "Myrobolan(Harad)",
-    "Nargasi",
-    "Nearle Hannu",
-    "Neem Seed",
-    "Nelli Kai",
-    "Nerium",
-    "nigella seeds",
-    "Niger Seed (Ramtil)",
-    "Nutmeg",
-    "Onion",
-    "Onion Green",
-    "Orange",
-    "Orchid",
-    "Other green and fresh vegetables",
-    "Other Pulses",
-    "Ox",
-    "Paddy(Dhan)(Basmati)",
-    "Paddy(Dhan)(Common)",
-    "Palash flowers",
-    "Papaya",
-    "Papaya (Raw)",
-    "Patti Calcutta",
-    "Peach",
-    "Pear(Marasebu)",
-    "Peas cod",
-    "Peas Wet",
-    "Peas(Dry)",
-    "Pegeon Pea (Arhar Fali)",
-    "Pepper garbled",
-    "Pepper ungarbled",
-    "Perandai",
-    "Persimon(Japani Fal)",
-    "Pigs",
-    "Pineapple",
-    "pippali",
-    "Plum",
-    "Pointed gourd (Parval)",
-    "Polherb",
-    "Pomegranate",
-    "Poppy capsules",
-    "poppy seeds",
-    "Potato",
-    "Pumpkin",
-    "Pundi",
-    "Pundi Seed",
-    "Pupadia",
-    "Raddish",
-    "Ragi (Finger Millet)",
-    "Raibel",
-    "Rajgir",
-    "Rala",
-    "Ram",
-    "Ramphal",
-    "Rat Tail Radish (Mogari)",
-    "Ratanjot",
-    "Raya",
-    "Rayee",
-    "Red Cabbage",
-    "Red Gram",
-    "Resinwood",
-    "Riccbcan",
-    "Rice",
-    "Ridgeguard(Tori)",
-    "Rose(Local)",
-    "Rose(Loose))",
-    "Rose(Tata)",
-    "Round gourd",
-    "Rubber",
-    "Sabu Dan",
-    "Safflower",
-    "Saffron",
-    "Sajje",
-    "salvia",
-    "Same/Savi",
-    "sanay",
-    "Sandalwood",
-    "Sarasum",
-    "Season Leaves",
-    "Seegu",
-    "Seemebadnekai",
-    "Seetapal",
-    "Sesamum(Sesame,Gingelly,Til)",
-    "sevanti",
-    "She Buffalo",
-    "She Goat",
-    "Sheep",
-    "Siddota",
-    "Siru Kizhagu",
-    "Skin And Hide",
-    "Snakeguard",
-    "Soanf",
-    "Soapnut(Antawala/Retha)",
-    "Soha",
-    "Soji",
-    "Sompu",
-    "Soyabean",
-    "spikenard",
-    "Spinach",
-    "Sponge gourd",
-    "Squash(Chappal Kadoo)",
-    "stevia",
-    "stone pulverizer",
-    "Sugar",
-    "Sugarcane",
-    "Sundaikai",
-    "Sunflower",
-    "Sunflower Seed",
-    "Sunhemp",
-    "Suram",
-    "Surat Beans (Papadi)",
-    "Suva (Dill Seed)",
-    "Suvarna Gadde",
-    "Sweet Potato",
-    "Sweet Pumpkin",
-    "Sweet Sultan",
-    "sweet william",
-    "T.V. Cumbu",
-    "Tamarind Fruit",
-    "Tamarind Seed",
-    "Tapioca",
-    "Taramira",
-    "Tea",
-    "Tender Coconut",
-    "Thinai (Italian Millet)",
-    "Thogrikai",
-    "Thondekai",
-    "Tinda",
-    "Tobacco",
-    "Tomato",
-    "Torchwood",
-    "Toria",
-    "Tube Flower",
-    "Tube Rose(Double)",
-    "Tube Rose(Loose)",
-    "Tube Rose(Single)",
-    "Tulasi",
-    "tulip",
-    "Turmeric",
-    "Turmeric (raw)",
-    "Turnip",
-    "vadang",
-    "Vatsanabha",
-    "Walnut",
-    "Water Apple",
-    "Water chestnut",
-    "Water Melon",
-    "Wax",
-    "Wheat",
-    "Wheat Atta",
-    "White Muesli",
-    "White Peas",
-    "White Pumpkin",
-    "Wild lemon",
-    "Wood",
-    "Wood Apple",
-    "Wool",
-    "Yam",
-    "Yam (Ratalu)",
-  ]);
-
-  // Fetch districts
-  const {
-    data: districts = [],
-    isLoading: loadingDistricts,
-    error: districtsError,
-  } = useQuery({
-    queryKey: ["districts", selectedState],
-    queryFn: () =>
-      Ax.get(`/district?state=${encodeURIComponent(selectedState)}`).then(
-        (res) => res.data.districts || []
-      ),
-    enabled: !!selectedState,
+const LivestockPriceApp = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["prices"],
+    queryFn: () => Ax.get("/statewise-prices").then(res => res.data)
   });
 
-  // Fetch markets
-  const {
-    data: markets = [],
-    isLoading: loadingMarkets,
-    error: marketsError,
-  } = useQuery({
-    queryKey: ["markets", selectedState, selectedDistrict],
-    queryFn: () =>
-      Ax.get(
-        `/markets?state=${encodeURIComponent(
-          selectedState
-        )}&district=${encodeURIComponent(selectedDistrict)}`
-      ).then((res) => res.data.markets || []),
-    enabled: !!selectedState && !!selectedDistrict,
-  });
+  const dbRecords = data?.data || [];
 
-  // Fetch prices
-  const {
-    data: prices = [],
-    isLoading: loadingPrices,
-    error: pricesError,
-  } = useQuery({
-    queryKey: [
-      "data",
-      selectedState,
-      selectedDistrict,
-      selectedMarket,
-      selectedCommodity,
-    ],
-    queryFn: () => {
-      const params = new URLSearchParams({
-        state: selectedState,
-        district: selectedDistrict,
-        market: selectedMarket,
-      });
-      if (selectedCommodity) params.append("commodity", selectedCommodity);
+  // Flatten data - each document has records array
+  const allRecords = dbRecords.flatMap(doc => 
+    (doc.records || []).map(record => ({
+      ...record,
+      state: doc.state,
+      commodity_name: doc.commodity_name
+    }))
+  );
 
-      return Ax.get(`/data?${params.toString()}`).then(
-        (res) => res.data.data || []
-      );
-    },
-    enabled: !!selectedState && !!selectedDistrict && !!selectedMarket,
-  });
-
-  const getPriceTrend = (price, index) => {
-    if (index === 0 || !prices[index - 1]) return "stable";
-    const prev = parseFloat(prices[index - 1].modal_price || 0);
-    const current = parseFloat(price.modal_price || 0);
-    if (current > prev) return "up";
-    if (current < prev) return "down";
-    return "stable";
+  // Get dates dynamically from first record
+  const getFormattedDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const [day, month, year] = dateStr.split("-");
+    const date = new Date(year, month - 1, day);
+    return date.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
   };
 
-  const handleExportCSV = () => {
-    if (!prices || !prices.length) {
-      alert("No data to export");
+  // Extract dates from first record if available
+  const firstRecord = allRecords[0] || {};
+  const todayDate = getFormattedDate(firstRecord.reported_date);
+  
+  // Calculate previous dates
+  const getDateBefore = (dateStr, daysBefore) => {
+    if (!dateStr) return "N/A";
+    const [day, month, year] = dateStr.split("-");
+    const date = new Date(year, month - 1, day);
+    date.setDate(date.getDate() - daysBefore);
+    return date.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  };
+
+  const oneDayAgoDate = getDateBefore(firstRecord.reported_date, 1);
+  const twoDaysAgoDate = getDateBefore(firstRecord.reported_date, 2);
+
+  const getTrendIcon = (trend) => {
+    if (trend === "up") return "↑";
+    if (trend === "down") return "↓";
+    return "−";
+  };
+
+  const getTrendColor = (trend) => {
+    if (trend === "up") return "text-green-700";
+    if (trend === "down") return "text-red-600";
+    return "text-gray-500";
+  };
+
+  const formatNumber = (num) => {
+    if (!num) return "−";
+    return parseFloat(num).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
+  const handleDownloadCSV = () => {
+    if (!allRecords.length) {
+      alert("No data available to download");
       return;
     }
 
+    // CSV Headers
     const headers = [
-      "Date",
       "Commodity",
-      "Max Price",
-      "Min Price",
-      "Modal Price",
-      "Variety",
-      "Grade",
+      "Commodity Group",
+      "MSP (Rs./Quintal)",
+      `Price ${todayDate}`,
+      `Price ${oneDayAgoDate}`,
+      `Price ${twoDaysAgoDate}`,
+      `Arrival ${todayDate}`,
+      `Arrival ${oneDayAgoDate}`,
+      `Arrival ${twoDaysAgoDate}`,
+      "Trend"
     ];
-    const rows = prices.map((p) => [
-      p.price_date ? new Date(p.price_date).toLocaleDateString("en-IN") : "N/A",
-      p.commodity || "N/A",
-      p.max_price ? parseFloat(p.max_price).toLocaleString("en-IN") : "N/A",
-      p.min_price ? parseFloat(p.min_price).toLocaleString("en-IN") : "N/A",
-      p.modal_price ? parseFloat(p.modal_price).toLocaleString("en-IN") : "N/A",
-      p.variety || "N/A",
-      p.grade || "N/A",
+
+    // CSV Rows
+    const rows = allRecords.map(record => [
+      record.cmdt_name || "N/A",
+      record.cmdt_grp_name || "N/A",
+      record.msp_price || "N/A",
+      record.as_on_price || "N/A",
+      record.one_day_ago_price || "N/A",
+      record.two_day_ago_price || "N/A",
+      record.as_on_arrival || "N/A",
+      record.one_day_ago_arrival || "N/A",
+      record.two_day_ago_arrival || "N/A",
+      record.trend || "N/A"
     ]);
 
+    // Create CSV content
     const csvContent = [headers, ...rows]
-      .map((row) => row.map((field) => `"${field}"`).join(","))
+      .map(row => row.map(field => `"${field}"`).join(","))
       .join("\n");
 
+    // Download
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", `${selectedCommodity || "all"}_prices.csv`);
+    link.setAttribute("download", `commodity_prices_${todayDate.replace(/\s/g, "_")}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
 
-  // Error display component
-  const ErrorDisplay = ({ error, title }) => (
-    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-      <div className="text-red-800 font-semibold">{title}</div>
-      <div className="text-red-600 text-sm">
-        {error?.message || "An error occurred"}
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-green-200 border-t-green-600 mb-4"></div>
+          <p className="text-green-700 font-medium">Loading price data...</p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 pb-16">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-emerald-700 text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Live Commodity Prices</h1>
-            <p className="text-green-100 text-lg">
-              Real-time market prices for farmers across India
-            </p>
-          </div>
-          <div className="bg-green-800 bg-opacity-50 rounded-lg px-4 py-3 text-sm flex items-center gap-2">
-            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-            Live Updates
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white">
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-700 text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">🌾 Kerala State Commodity Prices</h1>
+              <p className="text-green-100 text-lg">Real-time Agricultural Market Data</p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Marquee */}
-      <div className="overflow-hidden bg-green-100 border-l-4 border-green-500 py-2">
-        <div className="whitespace-nowrap text-green-800 font-semibold text-lg animate-pulse px-4">
-          New prices update everyday at{" "}
-          <span className="text-green-600 font-bold">11:30PM</span>
-        </div>
-        <div className="whitespace-nowrap text-green-700 text-sm px-4 italic">
-          Note: Some price dates may remain the same if Agmarknet has not
-          updated them.
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Error Messages */}
-        {districtsError && (
-          <ErrorDisplay
-            error={districtsError}
-            title="Failed to load districts"
-          />
-        )}
-        {marketsError && (
-          <ErrorDisplay error={marketsError} title="Failed to load markets" />
-        )}
-        {pricesError && (
-          <ErrorDisplay error={pricesError} title="Failed to load price data" />
-        )}
-
-        {/* Selectors */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border-t-4 border-green-500">
-          <h2 className="text-2xl font-semibold text-green-800 mb-6">
-            📍 Select Your Location
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <SelectDropdown
-              label="State"
-              value={selectedState}
-              onChange={(v) => {
-                setSelectedState(v);
-                setSelectedDistrict("");
-                setSelectedMarket("");
-                setSelectedCommodity("");
-              }}
-              options={states.map((s) =>
-                s === "NCT_of_Delhi" ? "NCT of Delhi" : s.replace("_", " ")
-              )}
-              placeholder="🏛️ Select State"
-            />
-
-            <SelectDropdown
-              label="District"
-              value={selectedDistrict}
-              onChange={(v) => {
-                setSelectedDistrict(v);
-                setSelectedMarket("");
-                setSelectedCommodity("");
-              }}
-              options={districts}
-              placeholder={
-                loadingDistricts ? "Loading..." : "🏘️ Select District"
-              }
-              disabled={!selectedState || loadingDistricts}
-            />
-
-            <SelectDropdown
-              label="Market"
-              value={selectedMarket}
-              onChange={(v) => {
-                setSelectedMarket(v);
-                setSelectedCommodity("");
-              }}
-              options={markets}
-              placeholder={loadingMarkets ? "Loading..." : "🏪 Select Market"}
-              disabled={!selectedDistrict || loadingMarkets}
-            />
-
-            <SelectDropdown
-              label="Commodity"
-              value={selectedCommodity}
-              onChange={setSelectedCommodity}
-              options={commodities}
-              placeholder="🌾 Filter by commodity (Optional)"
-              disabled={!selectedMarket}
-            />
-          </div>
-        </div>
-
-        {/* Loader */}
-        {(loadingDistricts || loadingMarkets || loadingPrices) && (
-          <div className="bg-white rounded-2xl shadow-xl p-12 mb-8 text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-green-200 border-t-green-600 mb-4"></div>
-            <p className="text-green-700 text-lg font-medium">
-              Fetching latest data...
-            </p>
-          </div>
-        )}
-
-        {/* Prices Table */}
-        {prices.length > 0 && !loadingPrices && (
-          <div className="bg-white rounded-2xl shadow-xl border-t-4 border-green-500 overflow-hidden">
-            <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div>
-                <h2 className="text-2xl font-bold mb-1">💰 Market Prices</h2>
-                <p className="text-green-100">
-                  {selectedMarket}, {selectedDistrict},{" "}
-                  {selectedState.replace("_", " ")}
-                  {selectedCommodity && ` • ${selectedCommodity}`}
-                  <br />
-                  <span className="text-sm text-green-200">
-                    📅 Last Updated:{" "}
-                    {prices.length > 0
-                      ? new Date(
-                          prices[0].LastUpdated ||
-                            prices[prices.length - 1].LastUpdated
-                        ).toLocaleString("en-IN", {
-                          dateStyle: "medium",
-                          timeStyle: "short",
-                        })
-                      : "N/A"}
-                  </span>
-                </p>
-              </div>
-              <button
-                onClick={handleExportCSV}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors font-medium"
-              >
-                📊 Export CSV
-              </button>
-            </div>
-
-            <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
-              <table className="w-full table-auto border-collapse">
-                <thead className="bg-green-100 sticky top-0">
-                  <tr>
-                    {[
-                      "Date",
-                      "Commodity",
-                      "Max Price (₹)",
-                      "Min Price (₹)",
-                      "Modal Price (₹)",
-                      "Variety",
-                      "Grade",
-                    ].map((h) => (
-                      <th
-                        key={h}
-                        className="px-6 py-3 text-left text-sm font-bold text-green-800 border-b border-green-200"
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-green-100">
-                  {prices.map((price, index) => {
-                    const trend = getPriceTrend(price, index);
-                    return (
-                      <tr
-                        key={price._id || index}
-                        className="hover:bg-green-50 transition-colors"
-                      >
-                        <td className="px-6 py-3 text-sm text-gray-800">
-                          {price.price_date
-                            ? new Date(price.price_date).toLocaleDateString(
-                                "en-IN"
-                              )
-                            : "N/A"}
-                        </td>
-                        <td className="px-6 py-3 text-sm text-gray-800 font-medium">
-                          {price.commodity || "N/A"}
-                        </td>
-                        <td className="px-6 py-3 text-right font-bold text-green-700">
-                          {price.max_price
-                            ? parseFloat(price.max_price).toLocaleString(
-                                "en-IN"
-                              )
-                            : "N/A"}
-                        </td>
-                        <td className="px-6 py-3 text-right font-bold text-green-700">
-                          {price.min_price
-                            ? parseFloat(price.min_price).toLocaleString(
-                                "en-IN"
-                              )
-                            : "N/A"}
-                        </td>
-                        <td className="px-6 py-3 text-right font-bold text-green-700">
-                          <div className="flex items-center justify-end gap-2">
-                            {price.modal_price
-                              ? parseFloat(price.modal_price).toLocaleString(
-                                  "en-IN"
-                                )
-                              : "N/A"}
-                            {trend === "up" && (
-                              <span
-                                className="text-green-500"
-                                title="Price increased"
-                              >
-                                📈
-                              </span>
-                            )}
-                            {trend === "down" && (
-                              <span
-                                className="text-red-500"
-                                title="Price decreased"
-                              >
-                                📉
-                              </span>
-                            )}
-                            {trend === "stable" && (
-                              <span
-                                className="text-gray-500"
-                                title="Price stable"
-                              >
-                                ➡️
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        <td className="px-6 py-3 text-sm text-gray-800">
-                          {price.variety || "N/A"}
-                        </td>
-                        <td className="px-6 py-3 text-sm text-gray-800">
-                          {price.grade || "N/A"}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* No Data */}
-        {!loadingPrices &&
-          prices.length === 0 &&
-          selectedMarket &&
-          !pricesError && (
-            <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-bold text-gray-600 mb-2">
-                No Data Available
-              </h3>
-              <p className="text-gray-500">
-                No price data found for your selection. Try selecting a
-                different market or commodity.
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Alert Banner */}
+        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-l-4 border-amber-500 p-5 mb-6 rounded-lg shadow-sm">
+          <div className="flex items-start gap-3">
+            <span className="inline-block w-3 h-3 bg-amber-500 rounded-full animate-pulse mt-1"></span>
+            <div>
+              <p className="text-amber-900 font-semibold text-lg">
+                ⏰ Daily Updates at <span className="font-bold text-amber-700">11:30 PM</span>
+              </p>
+              <p className="text-amber-700 text-sm mt-1">
+                Note: Some prices may remain unchanged if Agmarknet 2.0 has not updated the data.
               </p>
             </div>
-          )}
+          </div>
+        </div>
+        
+        {/* Main Table Card */}
+        <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-green-100">
+          {/* Table Header with Download Button */}
+          <div className="bg-gradient-to-r from-green-100 to-emerald-100 px-6 py-4 border-b border-green-200 flex justify-between items-center">
+            <div>
+              <h2 className="text-xl font-bold text-green-800">Commodity Price List</h2>
+              <p className="text-sm text-green-600 mt-1">Total: {allRecords.length} commodities</p>
+            </div>
+            <button
+              onClick={handleDownloadCSV}
+              className="bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2"
+            >
+              <span className="text-lg">📥</span>
+              Export Today data
+            </button>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gradient-to-r from-green-600 to-emerald-600 text-white">
+                  <th className="px-6 py-4 text-left font-bold border-r border-green-500" rowSpan="2">
+                    Commodity
+                  </th>
+                  <th className="px-6 py-4 text-center font-bold border-r border-green-500" rowSpan="2">
+                    MSP (Rs./Quintal)<br/>
+                    <span className="text-sm font-normal text-green-100">2025-26</span>
+                  </th>
+                  <th className="px-6 py-4 text-center font-bold border-r border-green-500" colSpan="3">
+                    💰 Price (Rs./Quintal)
+                  </th>
+                  <th className="px-6 py-4 text-center font-bold" colSpan="3">
+                    📦 Arrival (Metric Tonnes)
+                  </th>
+                </tr>
+                <tr className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                  <th className="px-4 py-3 text-center text-sm font-semibold border-r border-green-400">{todayDate}</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold border-r border-green-400">{oneDayAgoDate}</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold border-r border-green-500">{twoDaysAgoDate}</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold border-r border-green-400">{todayDate}</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold border-r border-green-400">{oneDayAgoDate}</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold">{twoDaysAgoDate}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allRecords.map((record, idx) => (
+                  <tr 
+                    key={idx}
+                    className={`${idx % 2 === 0 ? 'bg-white' : 'bg-green-50'} hover:bg-emerald-100 transition-colors duration-150`}
+                  >
+                    <td className="px-6 py-4 border-b border-green-100">
+                      <div className="font-semibold text-gray-800 text-base">{record.cmdt_name}</div>
+                      <div className="text-xs text-green-600 font-medium mt-1">{record.cmdt_grp_name}</div>
+                    </td>
+                    <td className="px-6 py-4 text-center border-b border-green-100">
+                      <span className="font-bold text-gray-700 text-base">
+                        {record.msp_price ? formatNumber(record.msp_price) : "−"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-center border-b border-green-100 bg-gradient-to-br from-green-50 to-emerald-50">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className={`font-bold text-xl ${getTrendColor(record.trend)}`}>
+                          {getTrendIcon(record.trend)}
+                        </span>
+                        <span className="font-bold text-gray-900 text-base">
+                          {formatNumber(record.as_on_price)}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-center border-b border-green-100">
+                      <span className="text-gray-700 font-medium">{formatNumber(record.one_day_ago_price)}</span>
+                    </td>
+                    <td className="px-6 py-4 text-center border-b border-green-100">
+                      <span className="text-gray-700 font-medium">{formatNumber(record.two_day_ago_price)}</span>
+                    </td>
+                    <td className="px-6 py-4 text-center border-b border-green-100 bg-gradient-to-br from-emerald-50 to-green-50">
+                      <span className="font-bold text-gray-900 text-base">{formatNumber(record.as_on_arrival)}</span>
+                    </td>
+                    <td className="px-6 py-4 text-center border-b border-green-100">
+                      <span className="text-gray-700 font-medium">{formatNumber(record.one_day_ago_arrival)}</span>
+                    </td>
+                    <td className="px-6 py-4 text-center border-b border-green-100">
+                      <span className="text-gray-700 font-medium">{formatNumber(record.two_day_ago_arrival)}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Footer Info */}
+        <div className="mt-6 text-center text-sm text-gray-600">
+          <p className="bg-white rounded-lg py-3 px-6 inline-block shadow-sm border border-green-100">
+            Showing <span className="font-bold text-green-700">{allRecords.length}</span> commodities
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-// Reusable Dropdown Component
-const SelectDropdown = ({
-  label,
-  value,
-  onChange,
-  options,
-  placeholder,
-  disabled,
-}) => (
-  <div className="w-full">
-    <label className="block text-sm font-semibold text-green-700 mb-2">
-      {label}
-    </label>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      disabled={disabled}
-      className="w-full p-4 border-2 border-green-200 rounded-xl bg-green-50 text-green-800 font-medium disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed focus:border-green-400 focus:outline-none transition-colors"
-    >
-      <option value="">{placeholder}</option>
-      {options.map((opt, idx) => (
-        <option key={idx} value={opt}>
-          {opt}
-        </option>
-      ))}
-    </select>
-  </div>
-);
-
-export default CommodityPriceApp;
+export default LivestockPriceApp;
